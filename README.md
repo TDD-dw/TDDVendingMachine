@@ -1,5 +1,10 @@
-# TDD Kata with Poker Hands in JavaScript
+# TDD Kata with Vending Machine in JavaScript
 
+## Table of Contents
+ - [Setup](#setup)
+ - [Ensemble (mobbing) workflow](#ensemble-mobbing-workflow)
+ - [TDDVendingMachine](#tddvendingmachine)
+ 
 ## Setup
 Please do all of the technical setup before joining the session. This will allow us to minimize interruptions and focus on writing code. If you are stuck on something, reach out to the facilitators and we can help you offline.
 
@@ -9,13 +14,20 @@ Please do all of the technical setup before joining the session. This will allow
 - Ask one of the owners of this repo to invite you as a contributor with push access
   - Accept the invite
 
-## Ensemble (mobbing) workflow
+## Local project setup
+- clone using SSH
+- Use your favorite IDE
+- `npm install`
+- `npm test` to ensure that the test are working
+
 ### Install Mob.sh
 Mob.sh takes most of the committing, pushing, and pulling and condenses it to one command. This allows the mob to flow smoothly from one driver to the next. It has timer, turn suggestion and audio check functionalities.  
 - [Mob](https://github.com/remotemobprogramming/mob)
   - run `curl -sL install.mob.sh | sudo sh`
   - alternatively you can run `brew install remotemobprogramming/brew/mob`
   - run `mob moo` to check install and audio
+
+## Ensemble (mobbing) workflow
 
 ### Mob commands
   - `mob start` Person opening the session runs this in the branch
@@ -29,12 +41,6 @@ Mob.sh takes most of the committing, pushing, and pulling and condenses it to on
 
 ### After the mob
   - The person who runs `mob done` will need to do a commit and push on the original group branch. This makes sure that all of the ensemble's work is available to the next group.
-  
-## Local project setup
-- clone using SSH
-- Use your favorite IDE
-- `npm install`
-- `npm test` to ensure that the test are working
 
 # TDDVendingMachine
 Vending Machine Kata
