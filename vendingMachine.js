@@ -5,6 +5,7 @@ class VendingMachine {
     this.currentAmount = 0;
     this.display = "INSERT COINS";
     this.coinReturn = [];
+    this.productReturn = [];
   }
 
   insertCoin(coin) {
@@ -16,6 +17,17 @@ class VendingMachine {
       return this.coinReturn;
     }
     this.display = (this.currentAmount / 100).toFixed(2).toString();
+  }
+
+  select(product) {
+    let priceOfProduct = 0;
+    if (product === "candy") priceOfProduct = 65;
+    else if (product === "cola") priceOfProduct = 100;
+    else if (product === "chips") priceOfProduct = 50;
+    
+    this.display = "THANK YOU";
+    this.productReturn.push(product);
+    this.currentAmount -= priceOfProduct;
   }
 }
 
