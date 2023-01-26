@@ -2,15 +2,19 @@
 
 function acceptsCoins(coins) {
     let sum = 0
-    for(let coin of coins){
+    let rejectedCoins = []
+    
+    for (let coin of coins) {
         const value = identifyCoin(coin)
-        if(Number.isInteger(value)) {
+        if (typeof value === "number") {
           sum += value
+        } else {
+          rejectedCoins.push(coin)
         }
     }
 
 
-  return sum
+  return {sum: sum, rejectedCoins: rejectedCoins}
 }
 
 function vendingMachine() {
@@ -27,8 +31,12 @@ function identifyCoin(coin) {
   } else {
     return `Rejected ${{weight: 0.005, thickness: 3.14159}}`
   }
-
-  }
+}
  
+function products(userSelection) {
+  const vendingMachineProducts = ["cola", "chips", "candy"];
 
-module.exports = {vendingMachine, acceptsCoins, identifyCoin}
+  return vendingMachineProducts[userSelection-1];
+}
+
+module.exports = {vendingMachine, acceptsCoins, identifyCoin, products}
