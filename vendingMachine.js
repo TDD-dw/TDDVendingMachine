@@ -12,10 +12,6 @@ const recognizeCoin = (coin) => {
   }
 };
 
-const interpretValue = (coinStr) => {
-  return parseFloat(coinStr.slice(1, coinStr.length));
-};
-
 function vendingMachine(coin) {
   if (coin) {
     return recognizeCoin(coin);
@@ -27,15 +23,15 @@ function createVendingMachine() {
   let amount = 0;
   let rejectedCoins = [];
 
-  function insertCoin (coin) {
-    if (coin === 'penny') {
-      rejectedCoins.push('penny')
-      return
+  function insertCoin(coin) {
+    const coinType = detectCoin(coin);
+
+    if (coinType.name === "invalid") {
+      rejectedCoins.push(coin);
+      return;
     }
 
-    let coinString = recognizeCoin(coin);
-    let value = interpretValue(coinString);
-    amount += value;
+    amount += coinType.value;
   }
 
   function display() {
@@ -43,13 +39,26 @@ function createVendingMachine() {
   }
 
   function coinReturn() {
-    return rejectedCoins
+    return rejectedCoins;
+  }
+
+  function detectCoin(coin) {
+    if (coin.diameter === 21.21 && coin.weight === 5) {
+      return {name: "nickel", value: .05};
+    } else if (coin.diameter === 17.91 && coin.weight === 2.268) {
+      return {name: "dime", value: .1};
+    } else if (coin.diameter === 24.26 && coin.weight === 5.67) {
+      return {name: "quarter", value: .25};
+    } else {
+      return {name: "invalid", value: 0};
+    }
   }
 
   return {
     insertCoin,
     display,
-    coinReturn
+    coinReturn,
+    detectCoin,
   };
 }
 
