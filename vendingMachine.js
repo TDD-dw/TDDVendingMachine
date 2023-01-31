@@ -19,18 +19,27 @@ function acceptsCoins(coins) {
 
 function vendingMachine() {
   let display = "";
+  let coinReturn;
   function start(){
+
     display = "INSERT COIN"
-    
   }
   function getDisplay(){
     return display
+
+  }
+  function addCoin(coin){
+    try {
+      display = identifyCoin(coin).toFixed(2).toString();
+    } catch(e) {
+      coinReturn = coin
+    }
   }
 
-  function addCoin(coin){
-    display = identifyCoin(coin).toString();
+  function getCoinReturn() {
+
   }
-  return {start, getDisplay, addCoin}
+  return {start, getDisplay, addCoin, getCoinReturn}
 }
 
 function identifyCoin(coin) {
@@ -41,7 +50,7 @@ function identifyCoin(coin) {
   } else if (coin.weight === 5.670 && coin.thickness === 1.75) {
     return 0.25
   } else {
-    return `Rejected ${{weight: 0.005, thickness: 3.14159}}`
+    throw new Error('Invalid coin')
   }
 }
 
