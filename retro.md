@@ -54,3 +54,13 @@
 ## What to do differently?
 - don't talk over people
 - keep having discussions, keep suggesting things and explaining how they would work or why it would be beneficial performance or readability (object vs array), e.g. later we can use this object again, whereas right now an array can satisfy get the test to pass but isn't very usable later
+
+# Day 3, round 1 - group member names: Shan Li, Doja Abiose, Vivian So, Anna Poulakos
+
+## How does this feel?
+- so far, so good
+- still learning TDD with lots of growth in this area amongst the group
+
+## What to do differently?
+- take it slow with TDD in the next round
+- let's continue to use given, when, then format in unit test
