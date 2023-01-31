@@ -18,7 +18,13 @@ function acceptsCoins(coins) {
 }
 
 function vendingMachine() {
-  return 6 * 9
+  function start(){
+    
+  }
+  function getDisplay(){
+    return "INSERT COIN"
+  }
+  return {start, getDisplay}
 }
 
 function identifyCoin(coin) {
@@ -39,4 +45,4 @@ function products(userSelection) {
   return vendingMachineProducts[userSelection - 1];
 }
 
-module.exports = {vendingMachine, acceptsCoins, identifyCoin, products}
+module.exports = {vendingMachine, acceptsCoins, identifyCoin, products }

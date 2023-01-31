@@ -54,3 +54,14 @@ describe('customer inserted enough money', () => {
     expect().toEqual();
   })
 })
+
+describe('vending machine start up', () => {
+  it('should display INSERT COIN on start up', () => {
+    //given 
+    
+    //when
+    vendingMachine().start();
+    //then
+    expect(vendingMachine().getDisplay()).toEqual("INSERT COIN");
+  })
+})
