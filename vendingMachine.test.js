@@ -1,31 +1,41 @@
 "use strict";
 
-const { vendingMachine, createVendingMachine } = require("./vendingMachine");
+const { createVendingMachine } = require("./vendingMachine");
 
 const NICKEL = { diameter: 21.21, weight: 5 };
 const DIME = { diameter: 17.91, weight: 2.268 };
 const QUARTER = { diameter: 24.26, weight: 5.67 };
 const INVALID_COIN = { diameter: 100, weight: 100 };
+
 describe("vendingMachine", () => {
-  // todo: refactor old tests to use new vending machine object
-  it("detect no coins inserted", () => {
-    expect(vendingMachine()).toEqual("Insert coin");
+  it('should display "Insert coin" when no coins inserted', () => {
+    const vendingMachine = createVendingMachine();
+    expect(vendingMachine.display()).toEqual("Insert coin");
   });
 
   it("should display 5 cents when nickel is inserted", () => {
-    expect(vendingMachine("nickel")).toEqual("$0.05");
+    const vendingMachine = createVendingMachine();
+    vendingMachine.insertCoin(NICKEL);
+    expect(vendingMachine.display()).toEqual("$0.05");
   });
 
   it("should display 10 cents when dime is inserted", () => {
-    expect(vendingMachine("dime")).toEqual("$0.10");
+    const vendingMachine = createVendingMachine();
+    vendingMachine.insertCoin(DIME);
+    expect(vendingMachine.display()).toEqual("$0.10");
   });
 
   it("should display 25 cents when quarter is inserted", () => {
-    expect(vendingMachine("quarter")).toEqual("$0.25");
+    const vendingMachine = createVendingMachine();
+    vendingMachine.insertCoin(QUARTER);
+    expect(vendingMachine.display()).toEqual("$0.25");
   });
 
-  it('should display "Insert coin" when penny is inserted', () => {
-    expect(vendingMachine("penny")).toEqual("Insert coin");
+  it("should not add to amount when invalid coin is inserted", () => {
+    const vendingMachine = createVendingMachine();
+    vendingMachine.insertCoin(QUARTER);
+    vendingMachine.insertCoin(INVALID_COIN);
+    expect(vendingMachine.display()).toEqual("$0.25");
   });
 
   it("Insert a quarter, a dime and a nickel and validate that it gives us 40Cents", () => {
@@ -50,10 +60,56 @@ describe("vendingMachine", () => {
     const vendingMachine = createVendingMachine();
     const coin = NICKEL;
 
-
     vendingMachine.insertCoin(coin);
 
     expect(vendingMachine.display()).toEqual("$0.05");
+  });
+
+  describe("selectProduct", () => {
+    it("should dispense a cola when cola button is pressed & sufficient funds have been inserted", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("1");
+      expect(vendingMachine.dispenser()).toEqual(["cola"]);
+    });
+
+    it("should not dispense a cola when cola button is pressed & insufficient funds have been inserted", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("1");
+      expect(vendingMachine.dispenser()).toEqual([]);
+    });
+
+    it("should display 'THANK YOU' after dispensing product", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("1");
+      expect(vendingMachine.display()).toEqual("THANK YOU");
+    });
+
+    it("should display 'Insert coin' after dispensing product & displaying thank you", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("1");
+      vendingMachine.display();
+
+      expect(vendingMachine.display()).toEqual("Insert coin");
+    });
   });
 
   describe("detectCoin", () => {
@@ -61,28 +117,40 @@ describe("vendingMachine", () => {
       const vendingMachine = createVendingMachine();
       const coin = NICKEL;
 
-      expect(vendingMachine.detectCoin(coin)).toEqual({name: "nickel", value: .05});
+      expect(vendingMachine.detectCoin(coin)).toEqual({
+        name: "nickel",
+        value: 0.05,
+      });
     });
 
     it("should detect dime", () => {
       const vendingMachine = createVendingMachine();
       const coin = DIME;
 
-      expect(vendingMachine.detectCoin(coin)).toEqual({name: "dime", value: .1});
+      expect(vendingMachine.detectCoin(coin)).toEqual({
+        name: "dime",
+        value: 0.1,
+      });
     });
 
     it("should detect quarter", () => {
       const vendingMachine = createVendingMachine();
       const coin = QUARTER;
 
-      expect(vendingMachine.detectCoin(coin)).toEqual({name: "quarter", value: .25});
+      expect(vendingMachine.detectCoin(coin)).toEqual({
+        name: "quarter",
+        value: 0.25,
+      });
     });
 
     it("should detect invalid coin", () => {
       const vendingMachine = createVendingMachine();
       const coin = INVALID_COIN;
 
-      expect(vendingMachine.detectCoin(coin)).toEqual({name: "invalid", value: 0});
+      expect(vendingMachine.detectCoin(coin)).toEqual({
+        name: "invalid",
+        value: 0,
+      });
     });
   });
 });
