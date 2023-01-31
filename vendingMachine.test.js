@@ -33,24 +33,24 @@ describe('identify coin', () => {
 })
 
 describe('select product', () => {
-  
-    it('should return selected product', () => {
-      let userSelection = 1;
-      expect(products(userSelection)).toEqual("cola");
-    })
-    it('should return selected product', () => {
-          let userSelection = 2;
-          expect(products(userSelection)).toEqual("chips");
-    })
-    it('should return selected product', () => {
-              let userSelection = 3;
-              expect(products(userSelection)).toEqual("candy");
-    }) 
+
+  it('should return selected product', () => {
+    let userSelection = 1;
+    expect(products(userSelection)).toEqual("cola");
+  })
+  it('should return selected product', () => {
+    let userSelection = 2;
+    expect(products(userSelection)).toEqual("chips");
+  })
+  it('should return selected product', () => {
+    let userSelection = 3;
+    expect(products(userSelection)).toEqual("candy");
+  })
 
 })
 
- describe('customer inserted enough money', () => {
-    it('customer inserted money to buy cola', () => {
-              expect().toEqual();
-    })
- })
+describe('customer inserted enough money', () => {
+  it('customer inserted money to buy cola', () => {
+    expect().toEqual();
+  })
+})
