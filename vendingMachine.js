@@ -18,13 +18,19 @@ function acceptsCoins(coins) {
 }
 
 function vendingMachine() {
+  let display = "";
   function start(){
+    display = "INSERT COIN"
     
   }
   function getDisplay(){
-    return "INSERT COIN"
+    return display
   }
-  return {start, getDisplay}
+
+  function addCoin(coin){
+    display = identifyCoin(coin).toString();
+  }
+  return {start, getDisplay, addCoin}
 }
 
 function identifyCoin(coin) {

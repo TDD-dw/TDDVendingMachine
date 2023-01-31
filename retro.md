@@ -64,3 +64,14 @@
 ## What to do differently?
 - take it slow with TDD in the next round
 - let's continue to use given, when, then format in unit test
+
+# Day 3, round 2 - group member names: Shan Li, Doja Abiose, Vivian So, Anna Poulakos, Devon Wigle
+
+## How does this feel?
+- feel pretty good, learning lots from watching senior devs implement
+- learning JS nuances
+- going at a good pace
+
+## What to do differently?
+- try with a defined navigator role. 
+- ask for help if stuck
