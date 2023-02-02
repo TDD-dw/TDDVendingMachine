@@ -4,6 +4,9 @@ function createVendingMachine() {
   let amount = 0;
   let rejectedCoins = [];
   let dispensedItems = [];
+  let purchaseComplete = false;
+  let insufficientFunds = false;
+  let i
 
   function insertCoin(coin) {
     const coinType = detectCoin(coin);
@@ -17,12 +20,24 @@ function createVendingMachine() {
   }
 
   function display() {
-    if (dispensedItems.length > 0) {
-      return "THANK YOU";
+    if (insufficientFunds) {
+      insufficientFunds = false;
+      return "PRICE $1.00";
     }
+
+    if (dispensedItems.length > 0) {
+      if (purchaseComplete) {
+        purchaseComplete = false;
+        return "THANK YOU";
+      } else {
+        return "Insert coin";
+      }
+    }
+
     if (amount === 0) {
       return "Insert coin";
     }
+
     return formatValue(amount);
   }
 
@@ -43,13 +58,30 @@ function createVendingMachine() {
   }
 
   function pressButton(input) {
+    if (input === "2") {
+      if (amount === 0.5) {
+        purchaseComplete = true;
+        amount -= 0.5;
+        dispensedItems.push("chips");
+      } else {
+        insufficientFunds = true;
+      }
+    }
     if (amount === 1) {
+      purchaseComplete = true;
+      amount -= 1;
       dispensedItems.push("cola");
+    } else {
+      insufficientFunds = true;
     }
   }
 
   function dispenser() {
     return dispensedItems;
+  }
+
+  function getAmount() {
+    return amount;
   }
 
   return {
@@ -59,6 +91,7 @@ function createVendingMachine() {
     detectCoin,
     pressButton,
     dispenser,
+    getAmount,
   };
 }
 

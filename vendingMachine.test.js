@@ -104,11 +104,81 @@ describe("vendingMachine", () => {
       vendingMachine.insertCoin(QUARTER);
       vendingMachine.insertCoin(QUARTER);
       vendingMachine.insertCoin(QUARTER);
-
       vendingMachine.pressButton("1");
+
+      vendingMachine.display();
+      const secondDisplayOutput = vendingMachine.display();
+
+      expect(secondDisplayOutput).toEqual("Insert coin");
+    });
+
+    it("should reset current amount to $0.00", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.pressButton("1");
+
+      vendingMachine.display();
       vendingMachine.display();
 
-      expect(vendingMachine.display()).toEqual("Insert coin");
+      expect(vendingMachine.getAmount()).toEqual(0);
+    });
+
+    it("should display PRICE and item price if insufficient funds", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.pressButton("1");
+
+      expect(vendingMachine.display()).toEqual("PRICE $1.00");
+    });
+
+    it("should display amount after displaying item price due to insufficient funds", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.pressButton("1");
+
+      vendingMachine.display();
+      const secondDisplayOutput = vendingMachine.display();
+
+      expect(secondDisplayOutput).toEqual("$0.75");
+    });
+
+    it("should display 'Insert coin' after displaying item price due to insufficient funds", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.pressButton("1");
+
+      vendingMachine.display();
+      const secondDisplayOutput = vendingMachine.display();
+
+      expect(secondDisplayOutput).toEqual("Insert coin");
+    });
+
+    it("should be able to purchase chips", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("2");
+
+      expect(vendingMachine.dispenser()).toEqual(["chips"]);
+    });
+
+    it("should be able to purchase candy", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(DIME);
+      vendingMachine.insertCoin(NICKEL);
+
+      vendingMachine.pressButton("3");
+
+      expect(vendingMachine.dispenser()).toEqual(["candy"]);
     });
   });
 
