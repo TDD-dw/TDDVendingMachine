@@ -29,7 +29,7 @@ Mob.sh takes most of the committing, pushing, and pulling and condenses it to on
 
 ## Mob workflow
 
-### Mob commands
+### Commands
   - `mob start` Person opening the session runs this in the branch
     - It creates an ensemble branch off of the current working branch or does a checkout to the ensemble branch
   - `mob timer 5` sets a timer for number of minutes (5) until notification to switch
