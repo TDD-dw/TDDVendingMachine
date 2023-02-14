@@ -2,7 +2,7 @@
 
 ## Table of Contents
  - [Setup](#setup)
- - [Ensemble (mobbing) workflow](#ensemble-mobbing-workflow)
+ - [Mob workflow](#ensemble-mobbing-workflow)
  - [TDDVendingMachine](#tddvendingmachine)
  
 ## Setup
@@ -27,7 +27,7 @@ Mob.sh takes most of the committing, pushing, and pulling and condenses it to on
   - alternatively you can run `brew install remotemobprogramming/brew/mob`
   - run `mob moo` to check install and audio
 
-## Ensemble (mobbing) workflow
+## Mob workflow
 
 ### Mob commands
   - `mob start` Person opening the session runs this in the branch
