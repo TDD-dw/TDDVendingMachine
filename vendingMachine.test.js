@@ -180,6 +180,36 @@ describe("vendingMachine", () => {
 
       expect(vendingMachine.dispenser()).toEqual(["candy"]);
     });
+
+    it("should return change when funds exceed purchase price", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("1");
+
+      expect(vendingMachine.coinReturn()).toEqual([QUARTER]);
+    });
+
+     it("should calculate and return change when funds exceed purchase price", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+       vendingMachine.insertCoin(QUARTER);
+       vendingMachine.insertCoin(DIME);
+       vendingMachine.insertCoin(NICKEL);
+
+      vendingMachine.pressButton("1");
+
+      expect(vendingMachine.coinReturn()).toEqual([QUARTER, QUARTER, DIME, NICKEL]);
+    });
+
   });
 
   describe("detectCoin", () => {
