@@ -1,14 +1,14 @@
 "use strict";
 
 const items = {
-  '1': {name: 'cola', price: 1},
-  '2': {name: 'chips', price: 0.50},
-  '3': {name: 'candy', price: 0.65}
+  1: { name: "cola", price: 1 },
+  2: { name: "chips", price: 0.5 },
+  3: { name: "candy", price: 0.65 },
 };
 const coins = {
-  0.05: {diameter: 21.21, weight: 5},
-  0.10: {diameter: 17.91, weight: 2.268},
-  0.25: {diameter: 24.26, weight: 5.67}
+  0.05: { diameter: 21.21, weight: 5 },
+  0.1: { diameter: 17.91, weight: 2.268 },
+  0.25: { diameter: 24.26, weight: 5.67 },
 };
 
 function createVendingMachine() {
@@ -17,7 +17,6 @@ function createVendingMachine() {
   let dispensedItems = [];
   let purchaseComplete = false;
   let insufficientFunds = false;
-  let i;
 
   function insertCoin(coin) {
     const coinType = detectCoin(coin);
@@ -58,18 +57,18 @@ function createVendingMachine() {
 
   function detectCoin(coin) {
     if (coin.diameter === 21.21 && coin.weight === 5) {
-      return {name: "nickel", value: 0.05};
+      return { name: "nickel", value: 0.05 };
     } else if (coin.diameter === 17.91 && coin.weight === 2.268) {
-      return {name: "dime", value: 0.1};
+      return { name: "dime", value: 0.1 };
     } else if (coin.diameter === 24.26 && coin.weight === 5.67) {
-      return {name: "quarter", value: 0.25};
+      return { name: "quarter", value: 0.25 };
     } else {
-      return {name: "invalid", value: 0};
+      return { name: "invalid", value: 0 };
     }
   }
 
   function pressButton(input) {
-    makePurchase(items[input])
+    makePurchase(items[input]);
   }
 
   function makePurchase(item) {
@@ -77,18 +76,23 @@ function createVendingMachine() {
       purchaseComplete = true;
       amount -= item.price;
       dispensedItems.push(item.name);
-      makeChange(amount);
-      rejectedCoins.push({diameter: 24.26, weight: 5.67});
+      makeChange();
     } else {
       insufficientFunds = true;
     }
   }
 
-  function makeChange(remainingAmount) {
-    while (remainingAmount !== 0) {
-      // todo: complete function for calculating change
-      // check how many quarters, dimes, nickels fit in remaining amount
-      if (remainingAmount / )
+  function makeChange() {
+      calculateCoins(0.25);
+      calculateCoins(0.10);
+      calculateCoins(0.05);
+  }
+
+  function calculateCoins(coinValue) {
+    const numberOfCoins = Math.floor(amount/ coinValue);
+    amount -= numberOfCoins * coinValue;
+    for (let i = 1; i <= numberOfCoins; i++) {
+      rejectedCoins.push(coins[coinValue]);
     }
   }
 
@@ -119,4 +123,4 @@ function formatValue(amount) {
   return formatter.format(amount);
 }
 
-module.exports = {createVendingMachine};
+module.exports = { createVendingMachine };

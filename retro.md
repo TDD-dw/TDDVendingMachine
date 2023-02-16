@@ -44,3 +44,13 @@
 
 ## What to do differently?
 - use a task list to remind us of different things we want to hit, keep it updated
+
+# Day 6, round 1 -  Mark, Terry, Ed, Shan, Devon, Tsura, Lidia, Angy
+
+## How does this feel?
+- I shouldn't miss sessions, makes it harder to catch up
+- 4 minutes was 4 minutes, just the time we had
+- shorter time for larger group was good
+
+## What to do differently?
+- this went well.

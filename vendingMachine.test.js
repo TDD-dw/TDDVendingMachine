@@ -1,11 +1,11 @@
 "use strict";
 
-const { createVendingMachine } = require("./vendingMachine");
+const {createVendingMachine} = require("./vendingMachine");
 
-const NICKEL = { diameter: 21.21, weight: 5 };
-const DIME = { diameter: 17.91, weight: 2.268 };
-const QUARTER = { diameter: 24.26, weight: 5.67 };
-const INVALID_COIN = { diameter: 100, weight: 100 };
+const NICKEL = {diameter: 21.21, weight: 5};
+const DIME = {diameter: 17.91, weight: 2.268};
+const QUARTER = {diameter: 24.26, weight: 5.67};
+const INVALID_COIN = {diameter: 100, weight: 100};
 
 describe("vendingMachine", () => {
   it('should display "Insert coin" when no coins inserted', () => {
@@ -181,35 +181,21 @@ describe("vendingMachine", () => {
       expect(vendingMachine.dispenser()).toEqual(["candy"]);
     });
 
-    it("should return change when funds exceed purchase price", () => {
+    it("should return various change when funds exceed purchase price", () => {
       const vendingMachine = createVendingMachine();
       vendingMachine.insertCoin(QUARTER);
       vendingMachine.insertCoin(QUARTER);
       vendingMachine.insertCoin(QUARTER);
       vendingMachine.insertCoin(QUARTER);
       vendingMachine.insertCoin(QUARTER);
-
-      vendingMachine.pressButton("1");
-
-      expect(vendingMachine.coinReturn()).toEqual([QUARTER]);
-    });
-
-     it("should calculate and return change when funds exceed purchase price", () => {
-      const vendingMachine = createVendingMachine();
       vendingMachine.insertCoin(QUARTER);
-      vendingMachine.insertCoin(QUARTER);
-      vendingMachine.insertCoin(QUARTER);
-      vendingMachine.insertCoin(QUARTER);
-      vendingMachine.insertCoin(QUARTER);
-       vendingMachine.insertCoin(QUARTER);
-       vendingMachine.insertCoin(DIME);
-       vendingMachine.insertCoin(NICKEL);
+      vendingMachine.insertCoin(DIME);
+      vendingMachine.insertCoin(NICKEL);
 
       vendingMachine.pressButton("1");
 
       expect(vendingMachine.coinReturn()).toEqual([QUARTER, QUARTER, DIME, NICKEL]);
     });
-
   });
 
   describe("detectCoin", () => {
@@ -253,4 +239,15 @@ describe("vendingMachine", () => {
       });
     });
   });
+
+  describe("returnCoin", () => {
+    it.skip("should return all coins when user pushes return coin button", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+
+      const result = vendingMachine.pressButton("R");
+
+      expect(result)
+    });
+  })
 });
