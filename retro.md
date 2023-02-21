@@ -54,3 +54,28 @@
 
 ## What to do differently?
 - this went well.
+# Day 7, round 1 -  Terry,  Doja, Vivian S, Angy
+
+## How does this feel?
+- Not flowing as easily as when Ed has driven
+- feeling bumpy because of half written test.  Trying to get it back to a good red state.
+  - it's getting there
+- so far so good.  taking some time to come back up to speed.  (missed last session).
+- talking about design. going stepwise through  the code.  going in a good direction.
+  - step by step.  doing bare min.
+  - 
+
+## What to do differently?
+- 
+
+# Day 7, round 2 -  Terry,  Doja, Vivian S, Angy
+
+## How does this feel?
+- After talking about the design of makeChange, the flow of the mob went well
+- We got a lot of code in a finished an AC, Return Coins
+- Good design discussion to be able to move quickly in the code
+- Finished an AC, so it was good
+
+## What to do differently?
+- If the group anticipates a design discussion, set aside some time to discuss before setting
+the 4 minute timer to code

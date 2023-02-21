@@ -1,14 +1,14 @@
 "use strict";
 
 const items = {
-  1: { name: "cola", price: 1 },
-  2: { name: "chips", price: 0.5 },
-  3: { name: "candy", price: 0.65 },
+  1: {name: "cola", price: 1, quantity: 0},
+  2: {name: "chips", price: 0.5, quantity: 2},
+  3: {name: "candy", price: 0.65, quantity: 2},
 };
 const coins = {
-  0.05: { diameter: 21.21, weight: 5 },
-  0.1: { diameter: 17.91, weight: 2.268 },
-  0.25: { diameter: 24.26, weight: 5.67 },
+  0.05: {diameter: 21.21, weight: 5},
+  0.1: {diameter: 17.91, weight: 2.268},
+  0.25: {diameter: 24.26, weight: 5.67},
 };
 
 function createVendingMachine() {
@@ -57,39 +57,45 @@ function createVendingMachine() {
 
   function detectCoin(coin) {
     if (coin.diameter === 21.21 && coin.weight === 5) {
-      return { name: "nickel", value: 0.05 };
+      return {name: "nickel", value: 0.05};
     } else if (coin.diameter === 17.91 && coin.weight === 2.268) {
-      return { name: "dime", value: 0.1 };
+      return {name: "dime", value: 0.1};
     } else if (coin.diameter === 24.26 && coin.weight === 5.67) {
-      return { name: "quarter", value: 0.25 };
+      return {name: "quarter", value: 0.25};
     } else {
-      return { name: "invalid", value: 0 };
+      return {name: "invalid", value: 0};
     }
   }
 
   function pressButton(input) {
-    makePurchase(items[input]);
+    if (input === 'R') {
+      makeChange();
+    } else {
+      makePurchase(items[input]);
+    }
   }
 
   function makePurchase(item) {
-    if (amount >= item.price) {
+    if (amount >= item.price && item.quantity > 0) {
       purchaseComplete = true;
       amount -= item.price;
       dispensedItems.push(item.name);
       makeChange();
+    } else if (amount >= item.price && item.quantity <= 0) {
+
     } else {
       insufficientFunds = true;
     }
   }
 
   function makeChange() {
-      calculateCoins(0.25);
-      calculateCoins(0.10);
-      calculateCoins(0.05);
+    calculateCoins(0.25);
+    calculateCoins(0.10);
+    calculateCoins(0.05);
   }
 
   function calculateCoins(coinValue) {
-    const numberOfCoins = Math.floor(amount/ coinValue);
+    const numberOfCoins = Math.floor(amount / coinValue);
     amount -= numberOfCoins * coinValue;
     for (let i = 1; i <= numberOfCoins; i++) {
       rejectedCoins.push(coins[coinValue]);
@@ -123,4 +129,4 @@ function formatValue(amount) {
   return formatter.format(amount);
 }
 
-module.exports = { createVendingMachine };
+module.exports = {createVendingMachine};

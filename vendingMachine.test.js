@@ -241,13 +241,63 @@ describe("vendingMachine", () => {
   });
 
   describe("returnCoin", () => {
-    it.skip("should return all coins when user pushes return coin button", () => {
+    it("should return a quarter when user pushes return coin button", () => {
       const vendingMachine = createVendingMachine();
       vendingMachine.insertCoin(QUARTER);
 
-      const result = vendingMachine.pressButton("R");
+      vendingMachine.pressButton("R");
 
-      expect(result)
+      expect(vendingMachine.coinReturn()).toEqual([QUARTER]);
     });
-  })
+
+    it("should return a dime when user pushes return coin button", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(DIME);
+
+      vendingMachine.pressButton("R");
+
+      expect(vendingMachine.coinReturn()).toEqual([DIME]);
+    });
+
+    it("should return various change when user pushes return coin button ", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(DIME);
+      vendingMachine.insertCoin(NICKEL);
+
+      vendingMachine.pressButton("R");
+
+      expect(vendingMachine.coinReturn()).toEqual(
+        [QUARTER, QUARTER, QUARTER, QUARTER, QUARTER, QUARTER, DIME, NICKEL]
+      );
+    });
+
+    it("should display INSERT COIN when user pushes return coin button", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(DIME);
+
+      vendingMachine.pressButton("R");
+
+      expect(vendingMachine.display()).toEqual("Insert coin");
+    });
+  });
+
+  describe("sold out ", () => {
+    it("should display sold out when cola is out of stock", ()=>{
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("1");
+      expect(vendingMachine.display()).toEqual("SOLD OUT");
+    });
+  });
+
 });
