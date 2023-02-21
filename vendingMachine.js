@@ -5,18 +5,25 @@ const items = {
   2: { name: "chips", price: 0.5 },
   3: { name: "candy", price: 0.65 },
 };
+
 const coins = {
-  0.05: { diameter: 21.21, weight: 5 },
-  0.1: { diameter: 17.91, weight: 2.268 },
-  0.25: { diameter: 24.26, weight: 5.67 },
+  0.05: { name: NICKEL, diameter: 21.21, weight: 5 },
+  0.1: { name: DIME, diameter: 17.91, weight: 2.268 },
+  0.25: { name: QUARTER, diameter: 24.26, weight: 5.67 },
 };
+
+const NICKEL = { diameter: 21.21, weight: 5 };
+const DIME = { diameter: 17.91, weight: 2.268 };
+const QUARTER = { diameter: 24.26, weight: 5.67 };
 
 function createVendingMachine() {
   let amount = 0;
+  let inputCoins = [];
   let rejectedCoins = [];
   let dispensedItems = [];
   let purchaseComplete = false;
   let insufficientFunds = false;
+  let requestedInput = null;
 
   function insertCoin(coin) {
     const coinType = detectCoin(coin);
@@ -32,7 +39,7 @@ function createVendingMachine() {
   function display() {
     if (insufficientFunds) {
       insufficientFunds = false;
-      return "PRICE $1.00";
+      return `PRICE ${formatValue(items[requestedInput].price)}`;
     }
 
     if (dispensedItems.length > 0) {
@@ -56,11 +63,15 @@ function createVendingMachine() {
   }
 
   function detectCoin(coin) {
+    // refactor to use coins object to return name/value of coin. 
     if (coin.diameter === 21.21 && coin.weight === 5) {
+      inputCoins.push(NICKEL);
       return { name: "nickel", value: 0.05 };
     } else if (coin.diameter === 17.91 && coin.weight === 2.268) {
+      inputCoins.push(DIME);
       return { name: "dime", value: 0.1 };
     } else if (coin.diameter === 24.26 && coin.weight === 5.67) {
+      inputCoins.push(QUARTER);
       return { name: "quarter", value: 0.25 };
     } else {
       return { name: "invalid", value: 0 };
@@ -68,6 +79,13 @@ function createVendingMachine() {
   }
 
   function pressButton(input) {
+    if (input === "R") {
+      rejectedCoins.push(...inputCoins);
+      inputCoins = [];
+      amount = 0;
+      return;
+    }
+    requestedInput = input;
     makePurchase(items[input]);
   }
 
@@ -83,13 +101,13 @@ function createVendingMachine() {
   }
 
   function makeChange() {
-      calculateCoins(0.25);
-      calculateCoins(0.10);
-      calculateCoins(0.05);
+    calculateCoins(0.25);
+    calculateCoins(0.1);
+    calculateCoins(0.05);
   }
 
   function calculateCoins(coinValue) {
-    const numberOfCoins = Math.floor(amount/ coinValue);
+    const numberOfCoins = Math.floor(amount / coinValue);
     amount -= numberOfCoins * coinValue;
     for (let i = 1; i <= numberOfCoins; i++) {
       rejectedCoins.push(coins[coinValue]);
@@ -123,4 +141,4 @@ function formatValue(amount) {
   return formatter.format(amount);
 }
 
-module.exports = { createVendingMachine };
+module.exports = { createVendingMachine, NICKEL, DIME, QUARTER };

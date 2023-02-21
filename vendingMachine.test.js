@@ -1,11 +1,12 @@
 "use strict";
 
-const {createVendingMachine} = require("./vendingMachine");
-
-const NICKEL = {diameter: 21.21, weight: 5};
-const DIME = {diameter: 17.91, weight: 2.268};
-const QUARTER = {diameter: 24.26, weight: 5.67};
-const INVALID_COIN = {diameter: 100, weight: 100};
+const {
+  createVendingMachine,
+  NICKEL,
+  DIME,
+  QUARTER,
+} = require("./vendingMachine");
+const INVALID_COIN = { diameter: 100, weight: 100 };
 
 describe("vendingMachine", () => {
   it('should display "Insert coin" when no coins inserted', () => {
@@ -126,7 +127,7 @@ describe("vendingMachine", () => {
       expect(vendingMachine.getAmount()).toEqual(0);
     });
 
-    it("should display PRICE and item price if insufficient funds", () => {
+    it("should display PRICE and item price for cola if insufficient funds", () => {
       const vendingMachine = createVendingMachine();
       vendingMachine.insertCoin(QUARTER);
       vendingMachine.insertCoin(QUARTER);
@@ -134,6 +135,21 @@ describe("vendingMachine", () => {
       vendingMachine.pressButton("1");
 
       expect(vendingMachine.display()).toEqual("PRICE $1.00");
+    });
+
+    it("should display PRICE and item price for chips if insufficient funds", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.pressButton("2");
+
+      expect(vendingMachine.display()).toEqual("PRICE $0.50");
+    });
+    it("should display PRICE and item price for candy if insufficient funds", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.pressButton("3");
+
+      expect(vendingMachine.display()).toEqual("PRICE $0.65");
     });
 
     it("should display amount after displaying item price due to insufficient funds", () => {
@@ -194,7 +210,12 @@ describe("vendingMachine", () => {
 
       vendingMachine.pressButton("1");
 
-      expect(vendingMachine.coinReturn()).toEqual([QUARTER, QUARTER, DIME, NICKEL]);
+      expect(vendingMachine.coinReturn()).toEqual([
+        QUARTER,
+        QUARTER,
+        DIME,
+        NICKEL,
+      ]);
     });
   });
 
@@ -241,13 +262,22 @@ describe("vendingMachine", () => {
   });
 
   describe("returnCoin", () => {
-    it.skip("should return all coins when user pushes return coin button", () => {
+    it("should return all coins when user pushes return coin button", () => {
       const vendingMachine = createVendingMachine();
       vendingMachine.insertCoin(QUARTER);
 
-      const result = vendingMachine.pressButton("R");
+      vendingMachine.pressButton("R");
 
-      expect(result)
+      expect(vendingMachine.coinReturn()).toEqual([QUARTER]);
     });
-  })
+
+    it('should display "Insert coin" after user presses "Return coin" button', () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("R");
+
+      expect(vendingMachine.display()).toEqual("Insert coin");
+    });
+  });
 });

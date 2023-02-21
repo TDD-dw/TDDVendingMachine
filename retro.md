@@ -54,3 +54,26 @@
 
 ## What to do differently?
 - this went well.
+
+# Day 7, round 1 -  Mark, Devon, Lidia, Vivian Liao
+
+## How does this feel?
+- it went fast
+- pretty smooth
+- better context of the code after working with the group
+- it's hard to think about make it pass right away for the small changes we are making.
+- likes red, green, refactor cycle
+
+## What to do differently?
+- get to green fast, then refactor
+- do the small tests, so we don't miss whole pieces of code
+
+# Day 7, round 2 -  Mark, Devon, Lidia, Vivian Liao
+
+## How does this feel?
+- More refactored focused
+- feels good to address a requirement that was missed
+- trying to make sure all pieces stay connected when refactoring can be hard
+
+## What to do differently?
+- Things are going smoothly, continue as is.
