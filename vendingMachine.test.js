@@ -1,12 +1,15 @@
 "use strict";
+//Create a beforeEach for const vendingMachine
+//refactor tests
+const { createVendingMachine } = require("./vendingMachine");
 
-const {
-  createVendingMachine,
-  NICKEL,
-  DIME,
-  QUARTER,
-} = require("./vendingMachine");
 const INVALID_COIN = { diameter: 100, weight: 100 };
+const NICKEL = { diameter: 21.21, weight: 5 };
+const DIME = { diameter: 17.91, weight: 2.268 };
+const QUARTER = { diameter: 24.26, weight: 5.67 };
+const RETURNED_NICKEL = { name: "nickel", diameter: 21.21, weight: 5 };
+const RETURNED_DIME = { name: "dime", diameter: 17.91, weight: 2.268 };
+const RETURNED_QUARTER = { name: "quarter", diameter: 24.26, weight: 5.67 };
 
 describe("vendingMachine", () => {
   it('should display "Insert coin" when no coins inserted', () => {
@@ -211,10 +214,10 @@ describe("vendingMachine", () => {
       vendingMachine.pressButton("1");
 
       expect(vendingMachine.coinReturn()).toEqual([
-        QUARTER,
-        QUARTER,
-        DIME,
-        NICKEL,
+        RETURNED_QUARTER,
+        RETURNED_QUARTER,
+        RETURNED_DIME,
+        RETURNED_NICKEL,
       ]);
     });
   });
@@ -268,7 +271,7 @@ describe("vendingMachine", () => {
 
       vendingMachine.pressButton("R");
 
-      expect(vendingMachine.coinReturn()).toEqual([QUARTER]);
+      expect(vendingMachine.coinReturn()).toEqual([RETURNED_QUARTER]);
     });
 
     it('should display "Insert coin" after user presses "Return coin" button', () => {
@@ -278,6 +281,20 @@ describe("vendingMachine", () => {
       vendingMachine.pressButton("R");
 
       expect(vendingMachine.display()).toEqual("Insert coin");
+    });
+  });
+
+  describe("soldOut", () => {
+    it("should display sold out when inventory is out of cola", () => {
+      const vendingMachine = createVendingMachine();
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+      vendingMachine.insertCoin(QUARTER);
+
+      vendingMachine.pressButton("1");
+
+      expect(vendingMachine.display()).toEqual("Sold out");
     });
   });
 });

@@ -1,20 +1,16 @@
 "use strict";
 
 const items = {
-  1: { name: "cola", price: 1 },
+  1: { name: "cola", price: 1, quantity: 0 },
   2: { name: "chips", price: 0.5 },
   3: { name: "candy", price: 0.65 },
 };
 
 const coins = {
-  0.05: { name: NICKEL, diameter: 21.21, weight: 5 },
-  0.1: { name: DIME, diameter: 17.91, weight: 2.268 },
-  0.25: { name: QUARTER, diameter: 24.26, weight: 5.67 },
+  0.05: { name: "nickel", diameter: 21.21, weight: 5 },
+  0.1: { name: "dime", diameter: 17.91, weight: 2.268 },
+  0.25: { name: "quarter", diameter: 24.26, weight: 5.67 },
 };
-
-const NICKEL = { diameter: 21.21, weight: 5 };
-const DIME = { diameter: 17.91, weight: 2.268 };
-const QUARTER = { diameter: 24.26, weight: 5.67 };
 
 function createVendingMachine() {
   let amount = 0;
@@ -37,9 +33,17 @@ function createVendingMachine() {
   }
 
   function display() {
+    console.log('requestedInput', requestedInput)
     if (insufficientFunds) {
       insufficientFunds = false;
       return `PRICE ${formatValue(items[requestedInput].price)}`;
+    }
+    if (requestedInput === 'R') {
+      return 'Insert coin'
+    }
+
+    if (requestedInput && items[requestedInput].quantity === 0) {
+      return "Sold out";
     }
 
     if (dispensedItems.length > 0) {
@@ -63,16 +67,16 @@ function createVendingMachine() {
   }
 
   function detectCoin(coin) {
-    // refactor to use coins object to return name/value of coin. 
-    if (coin.diameter === 21.21 && coin.weight === 5) {
-      inputCoins.push(NICKEL);
-      return { name: "nickel", value: 0.05 };
-    } else if (coin.diameter === 17.91 && coin.weight === 2.268) {
-      inputCoins.push(DIME);
-      return { name: "dime", value: 0.1 };
-    } else if (coin.diameter === 24.26 && coin.weight === 5.67) {
-      inputCoins.push(QUARTER);
-      return { name: "quarter", value: 0.25 };
+    const coinType = Object.entries(coins).find(([key, coinObject]) => {
+      return (
+        coin.diameter === coinObject.diameter &&
+        coin.weight === coinObject.weight
+      );
+    });
+
+    if (coinType) {
+      inputCoins.push(coinType[1]);
+      return { name: coinType[1].name, value: Number(coinType[0]) };
     } else {
       return { name: "invalid", value: 0 };
     }
@@ -141,4 +145,4 @@ function formatValue(amount) {
   return formatter.format(amount);
 }
 
-module.exports = { createVendingMachine, NICKEL, DIME, QUARTER };
+module.exports = { createVendingMachine };

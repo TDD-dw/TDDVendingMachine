@@ -1,4 +1,6 @@
 fileignoreconfig:
 - filename: package-lock.json
   checksum: f60d77f30dcc32b4de01ed8b3b0e387f6ef03819841a7111ef8d234128a2ab2b
+- filename: vendingMachine.js
+  checksum: 1034ac652afc732d8460a4c42269ae0beb8c1259979870c966ceb1e3d1d539f8
 version: "1.0"
